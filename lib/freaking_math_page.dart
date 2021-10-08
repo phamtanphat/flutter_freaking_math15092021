@@ -16,12 +16,10 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     width = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -35,16 +33,19 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
               children: [
                 Container(
                     child: Text("0",
-                        style: TextStyle(color: Colors.white, fontSize: width / 15)),
+                        style: TextStyle(
+                            color: Colors.white, fontSize: width / 15)),
                     alignment: Alignment.topRight),
                 Expanded(
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text("2+2",
-                        style: TextStyle(color: Colors.white, fontSize: width / 5)),
+                        style: TextStyle(
+                            color: Colors.white, fontSize: width / 5)),
                     Text("=4",
-                        style: TextStyle(color: Colors.white, fontSize: width / 5)),
+                        style: TextStyle(
+                            color: Colors.white, fontSize: width / 5)),
                   ],
                 )),
                 Expanded(
@@ -52,34 +53,36 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          padding:
-                              MaterialStateProperty.all(EdgeInsets.all(30)),
-                          backgroundColor:
-                              MaterialStateProperty.resolveWith((states) {
-                            if (states.contains(MaterialState.pressed)) {
-                              return Colors.grey[200];
-                            }
-                            return Colors.white;
-                          })),
-                      onPressed: () {},
-                      child: Image.asset("assets/images/ic_true.png"),
+                    Container(
+                      width: width / 2.5,
+                      height: width / 2.5,
+                      child: ElevatedButton(
+                        style: ButtonStyle(backgroundColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Colors.grey[200];
+                          }
+                          return Colors.white;
+                        })),
+                        onPressed: () {},
+                        child: Image.asset("assets/images/ic_true.png"),
+                      ),
                     ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          padding:
-                              MaterialStateProperty.all(EdgeInsets.all(30)),
-                          backgroundColor:
-                              MaterialStateProperty.resolveWith((states) {
-                            if (states.contains(MaterialState.pressed)) {
-                              return Colors.grey[200];
-                            }
-                            return Colors.white;
-                          })),
-                      onPressed: () {},
-                      child: Image.asset("assets/images/ic_false.png"),
-                    )
+                    Container(
+                      width: width / 2.5,
+                      height: width / 2.5,
+                      child: ElevatedButton(
+                        style: ButtonStyle(backgroundColor:
+                            MaterialStateProperty.resolveWith((states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Colors.grey[200];
+                          }
+                          return Colors.white;
+                        })),
+                        onPressed: () {},
+                        child: Image.asset("assets/images/ic_false.png"),
+                      ),
+                    ),
                   ],
                 ))
               ],
