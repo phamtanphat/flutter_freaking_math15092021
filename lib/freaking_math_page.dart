@@ -12,39 +12,54 @@ class FreakingMathPage extends StatefulWidget {
 
 class _FreakingMathPageState extends State<FreakingMathPage> {
   late var width;
-  late var number1, number2 , numberResult;
+  late var number1, number2 ;
   late var isTrue;
   late var indexCalculator;
+  String result = "";
+  var stringCalculator = "";
   Random random = Random();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    randomCalculator();
   }
 
+  void randomCalculator(){
+    // random number
+    number1 = random.nextInt(10) + 1;
+    number2 = random.nextInt(10) + 1;
+
+    // random calculator
+    // 0 -> +
+    // 1 -> -
+    // 2 -> *
+    // 3 -> ~/
+    indexCalculator = random.nextInt(4);
+
+    switch(indexCalculator){
+      case 0 :
+        stringCalculator = "+";
+        result = (number1 + number2).toString();
+        break;
+      case 1 :
+        stringCalculator = "-";
+        result = (number1 - number2).toString();
+        break;
+      case 2 :
+        stringCalculator = "*";
+        result = (number1 * number2).toString();
+        break;
+      case 3 :
+        stringCalculator = "/";
+        result = (number1.toDouble() / number2.toDouble()).toStringAsFixed(1);
+        break;
+    }
+
+  }
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
-
-
-    void randomCalculator(){
-      // random number
-      number1 = random.nextInt(10) + 1;
-      number2 = random.nextInt(10) + 1;
-
-      // random calculator
-      // 0 -> +
-      // 1 -> -
-      // 2 -> *
-      // 3 -> ~/
-      indexCalculator = random.nextInt(4);
-
-      switch(indexCalculator){
-        case 0 :
-
-      }
-    }
-
     return Scaffold(
       body: Container(
         constraints: BoxConstraints.expand(),
@@ -63,10 +78,10 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
                     child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("2+2",
+                    Text("$number1 $stringCalculator $number2",
                         style: TextStyle(
                             color: Colors.white, fontSize: width / 5)),
-                    Text("=4",
+                    Text("=$result",
                         style: TextStyle(
                             color: Colors.white, fontSize: width / 5)),
                   ],
