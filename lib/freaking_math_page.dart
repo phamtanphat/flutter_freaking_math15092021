@@ -12,6 +12,10 @@ class FreakingMathPage extends StatefulWidget {
 
 class _FreakingMathPageState extends State<FreakingMathPage> {
   late var width;
+  late var number1, number2 , numberResult;
+  late var isTrue;
+  late var indexCalculator;
+  Random random = Random();
 
   @override
   void didChangeDependencies() {
@@ -21,6 +25,25 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
+
+
+    void randomCalculator(){
+      // random number
+      number1 = random.nextInt(10) + 1;
+      number2 = random.nextInt(10) + 1;
+
+      // random calculator
+      // 0 -> +
+      // 1 -> -
+      // 2 -> *
+      // 3 -> ~/
+      indexCalculator = random.nextInt(4);
+
+      switch(indexCalculator){
+        case 0 :
+
+      }
+    }
 
     return Scaffold(
       body: Container(
