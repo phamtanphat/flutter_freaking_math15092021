@@ -1,7 +1,11 @@
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'dart:io';
+
+import 'package:flutter/services.dart';
 
 class FreakingMathPage extends StatefulWidget {
   const FreakingMathPage({Key? key}) : super(key: key);
@@ -12,7 +16,7 @@ class FreakingMathPage extends StatefulWidget {
 
 class _FreakingMathPageState extends State<FreakingMathPage> {
   late var width;
-  late var number1, number2 ;
+  late var number1, number2, score = 0;
   late var isTrue;
   late var indexCalculator;
   String result = "";
@@ -26,20 +30,21 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
     randomCalculator();
   }
 
-  void randomCalculator(){
+  void randomCalculator() {
     // random number
     number1 = random.nextInt(10) + 1;
     number2 = random.nextInt(10) + 1;
 
     // random isTrue
     isTrue = random.nextBool();
-    if (!isTrue){
+    if (!isTrue) {
       result = (random.nextInt(10) + 1).toString();
-    }else{
+    } else {
       result = "0";
     }
     // random color
-    color = Color.fromARGB(255, random.nextInt(240) + 1, random.nextInt(240) + 1, random.nextInt(240) + 1);
+    color = Color.fromARGB(255, random.nextInt(240) + 1,
+        random.nextInt(240) + 1, random.nextInt(240) + 1);
 
     // random calculator
     // 0 -> +
@@ -48,25 +53,59 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
     // 3 -> ~/
     indexCalculator = random.nextInt(4);
 
-    switch(indexCalculator){
-      case 0 :
+    switch (indexCalculator) {
+      case 0:
         stringCalculator = "+";
         result = (number1 + number2 + int.parse(result)).toString();
         break;
-      case 1 :
+      case 1:
         stringCalculator = "-";
         result = (number1 - number2 + int.parse(result)).toString();
         break;
-      case 2 :
+      case 2:
         stringCalculator = "*";
         result = (number1 * number2 + int.parse(result)).toString();
         break;
-      case 3 :
+      case 3:
         stringCalculator = "/";
-        result = (number1.toDouble() / number2.toDouble() + int.parse(result)).toStringAsFixed(1);
+        result = (number1.toDouble() / number2.toDouble() + int.parse(result))
+            .toStringAsFixed(1);
         break;
     }
   }
+
+  void openDialog() {
+    showDialog(
+        context: context,
+        builder: (dialogContext) {
+          return AlertDialog(
+            title: Text("Bạn đã thua với $score điểm"),
+            content: Text("Bạn muốn chơi lại không ?"),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(dialogContext);
+                    setState(() {
+                      score = 0;
+                      randomCalculator();
+                    });
+                  },
+                  child: Text("Có")),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(dialogContext);
+                    if(Platform.isAndroid){
+                      SystemNavigator.pop();
+                    }else{
+                      exit(0);
+                    }
+                  },
+                  child: Text("Không"))
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
@@ -80,7 +119,7 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
             child: Column(
               children: [
                 Container(
-                    child: Text("0",
+                    child: Text("$score",
                         style: TextStyle(
                             color: Colors.white, fontSize: width / 15)),
                     alignment: Alignment.topRight),
@@ -112,7 +151,16 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
                           }
                           return Colors.white;
                         })),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (isTrue) {
+                            setState(() {
+                              score++;
+                              randomCalculator();
+                            });
+                          } else {
+                            openDialog();
+                          }
+                        },
                         child: Image.asset("assets/images/ic_true.png"),
                       ),
                     ),
@@ -127,7 +175,16 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
                           }
                           return Colors.white;
                         })),
-                        onPressed: () {},
+                        onPressed: () {
+                          if (!isTrue) {
+                            setState(() {
+                              score++;
+                              randomCalculator();
+                            });
+                          } else {
+                            openDialog();
+                          }
+                        },
                         child: Image.asset("assets/images/ic_false.png"),
                       ),
                     ),
