@@ -30,6 +30,14 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
     number1 = random.nextInt(10) + 1;
     number2 = random.nextInt(10) + 1;
 
+    // random isTrue
+    isTrue = random.nextBool();
+    if (!isTrue){
+      result = (random.nextInt(10) + 1).toString();
+    }else{
+      result = "0";
+    }
+
     // random calculator
     // 0 -> +
     // 1 -> -
@@ -40,21 +48,26 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
     switch(indexCalculator){
       case 0 :
         stringCalculator = "+";
-        result = (number1 + number2).toString();
+        result = (number1 + number2 + int.parse(result)).toString();
         break;
       case 1 :
         stringCalculator = "-";
-        result = (number1 - number2).toString();
+        result = (number1 - number2 + int.parse(result)).toString();
         break;
       case 2 :
         stringCalculator = "*";
-        result = (number1 * number2).toString();
+        result = (number1 * number2 + int.parse(result)).toString();
         break;
       case 3 :
         stringCalculator = "/";
-        result = (number1.toDouble() / number2.toDouble()).toStringAsFixed(1);
+        result = (number1.toDouble() / number2.toDouble() + int.parse(result)).toStringAsFixed(1);
         break;
     }
+
+
+
+
+
 
   }
   @override
