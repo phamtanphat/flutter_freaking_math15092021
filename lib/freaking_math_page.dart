@@ -18,6 +18,7 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
   String result = "";
   var stringCalculator = "";
   Random random = Random();
+  late Color color;
 
   @override
   void didChangeDependencies() {
@@ -37,6 +38,8 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
     }else{
       result = "0";
     }
+    // random color
+    color = Color.fromARGB(255, random.nextInt(240) + 1, random.nextInt(240) + 1, random.nextInt(240) + 1);
 
     // random calculator
     // 0 -> +
@@ -63,12 +66,6 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
         result = (number1.toDouble() / number2.toDouble() + int.parse(result)).toStringAsFixed(1);
         break;
     }
-
-
-
-
-
-
   }
   @override
   Widget build(BuildContext context) {
@@ -76,7 +73,7 @@ class _FreakingMathPageState extends State<FreakingMathPage> {
     return Scaffold(
       body: Container(
         constraints: BoxConstraints.expand(),
-        color: Colors.orange,
+        color: color,
         child: SafeArea(
           child: Container(
             padding: EdgeInsets.all(10),
